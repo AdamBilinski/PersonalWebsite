@@ -7,6 +7,7 @@ import {
 import Home from "./Home";
 import AboutMe from "./AboutMe";
 import Contact from "./Contact";
+import Projects from "./Projects";
  
 class Main extends Component {
     render() {
@@ -17,11 +18,13 @@ class Main extends Component {
             <ul className="header">
               <li><NavLink to="/">Home</NavLink></li>
               <li><NavLink to="/about">About Me</NavLink></li>
+              <li><NavLink to="/projects">Projects</NavLink></li>
               <li><NavLink to="/contact">Contact</NavLink></li>
             </ul>
             <div className="content">
               <Route exact path="/" component={Home}/>
               <Route path="/about" component={AboutMe}/>
+              <Route path="/projects" component={Projects}/>
               <Route path="/contact" component={Contact}/>
             </div>
           </div>
