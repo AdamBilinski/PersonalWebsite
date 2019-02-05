@@ -1,30 +1,32 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import Canvas from './Canvas';
+import Canvas from '../Canvas';
+import Ball from './Ball';
 
-class Breakout extends Component{
+class Breakout extends Component {
 
     state = {
-        canvas: null
+        ctx: null
     };
 
-    registerCanvas = (canvas) =>{
-            this.setState({
-            canvas: canvas
+    registerCanvas = (ctx) => {
+        this.setState({
+            ctx: ctx
         })
     }
 
-    writeText = () =>{
-        var ctx = this.state.canvas;
+    writeText = () => {
+        var ctx = this.state.ctx;
         ctx.font = "40px Courier"
         ctx.fillText("this.props.text", 210, 75)
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <button onClick={this.writeText}>Write text</button>
                 <Canvas registerCanvas={this.registerCanvas} />
+                <Ball ctx={this.state.ctx} />
             </div>
         )
     }
