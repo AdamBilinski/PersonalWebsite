@@ -1,32 +1,44 @@
 import React, { Component } from 'react';
 
 import Canvas from '../Canvas';
-import Ball from './Ball';
+import BallVM from './BallVM';
 
 class Breakout extends Component {
 
     state = {
-        ctx: null
+        ctx: null,
+        ball: null
     };
 
     registerCanvas = (ctx) => {
         this.setState({
-            ctx: ctx
+            ctx: ctx,
+            ball: new BallVM(ctx)
         })
     }
 
-    writeText = () => {
-        var ctx = this.state.ctx;
-        ctx.font = "40px Courier"
-        ctx.fillText("this.props.text", 210, 75)
+    drawBall = () => {
+        var ball = this.state.ball;
+        ball.drawBall();
+    }
+
+    moveRight = () => {
+        var ball = this.state.ball;
+        ball.moveRight();
+    }
+
+    moveLeft = () => {
+        var ball = this.state.ball;
+        ball.moveLeft();
     }
 
     render() {
         return (
             <div>
-                <button onClick={this.writeText}>Write text</button>
+                <button onClick={this.drawBall}>Draw Ball</button>
+                <button onClick={this.moveRight}>Left</button>
+                <button onClick={this.moveLeft}>Right</button>
                 <Canvas registerCanvas={this.registerCanvas} />
-                <Ball ctx={this.state.ctx} />
             </div>
         )
     }
