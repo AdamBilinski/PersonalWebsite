@@ -7,24 +7,22 @@ class Breakout extends Component {
 
     state = {
         ctx: null,
-        ball: null
+        canvasWidth: 400,
+        canvasHeight: 600,
+        ball: new BallVM(400, 600),
     };
 
-    renderCanvas() {
-        this.state.ball.drawBall();
+    renderCanvas = () => {
+        var ball = this.state.ball;
+        ball.draw();
         requestAnimationFrame(this.renderCanvas);
     }
 
     registerCanvas = (ctx) => {
         this.setState({
-            ctx: ctx,
-            ball: new BallVM(ctx)
+            ctx: ctx
         })
-    }
-
-    drawBall = () => {
-        var ball = this.state.ball;
-        ball.drawBall();
+        this.state.ball.setContext(ctx);
     }
 
     moveRight = () => {
@@ -43,7 +41,9 @@ class Breakout extends Component {
                 <button onClick={this.renderCanvas}>Start New Game</button>
                 <button onClick={this.moveRight}>Left</button>
                 <button onClick={this.moveLeft}>Right</button>
-                <Canvas registerCanvas={this.registerCanvas} />
+                <Canvas height={this.state.canvasHeight}
+                        width={this.state.canvasWidth}
+                        registerCanvas={this.registerCanvas} />
             </div>
         )
     }
