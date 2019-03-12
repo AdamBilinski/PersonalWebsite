@@ -10,6 +10,11 @@ class Breakout extends Component {
         ball: null
     };
 
+    renderCanvas() {
+        this.state.ball.drawBall();
+        requestAnimationFrame(this.renderCanvas);
+    }
+
     registerCanvas = (ctx) => {
         this.setState({
             ctx: ctx,
@@ -35,7 +40,7 @@ class Breakout extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.drawBall}>Draw Ball</button>
+                <button onClick={this.renderCanvas}>Start New Game</button>
                 <button onClick={this.moveRight}>Left</button>
                 <button onClick={this.moveLeft}>Right</button>
                 <Canvas registerCanvas={this.registerCanvas} />
