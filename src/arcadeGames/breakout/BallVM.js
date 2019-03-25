@@ -1,12 +1,12 @@
 class BallVM {
     constructor(canvasWidth, canvasHeight) {
-        this.width = canvasWidth;
-        this.height = canvasHeight;
-        this.movingRight = true;
-        this.movingTop = true;
+        this.cWidth = canvasWidth;
+        this.cHeight = canvasHeight;
         this.radius = 5;
-        this.X = this.width / 2 - this.radius / 2;
-        this.Y = this.height - this.radius;
+        this.x = this.cWidth / 2 - this.radius / 2;
+        this.y = this.cHeight - this.radius;
+        this.dx = 2;
+        this.dy = 2;
     }
 
     setContext = function (ctx) {
@@ -15,38 +15,23 @@ class BallVM {
 
     draw = function () {
         this.recalculatePosition();
-        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.ctx.clearRect(0, 0, this.cWidth, this.cHeight);
         this.ctx.beginPath();
-        this.ctx.arc(this.X, this.Y, 5, 0, 2 * Math.PI);
+        this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
         this.ctx.stroke();
         this.ctx.closePath();
     }
 
     recalculatePosition = function () {
-        if (this.X > this.width && this.movingRight) {
-            this.movingRight = false;
+        if(this.x + this.dx > this.cWidth-this.radius || this.x + this.dx < this.radius) {
+            this.dx = -this.dx;
         }
-        else if(this.X < 0 && !this.movingRight){
-            this.movingRight = true;
-        }
-
-        if (this.Y < 0 && this.movingTop) {
-            this.movingTop = false;
-        }
-        else if(this.Y > this.height && !this.movingTop){
-            this.movingTop = true;
+        if(this.y + this.dy > this.cHeight-this.radius || this.y + this.dy < this.radius) {
+            this.dy = -this.dy;
         }
 
-        if (this.movingRight) {
-            this.X += 1;
-        } else {
-            this.X -= 1;
-        }
-
-        if (this.movingTop) {
-            this.Y -= 1;
-        } else { 
-            this.Y += 1; }
+        this.x += this.dx;
+        this.y += this.dy;
     }
 }
 
