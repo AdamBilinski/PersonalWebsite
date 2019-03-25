@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Canvas from '../Canvas';
 import BallVM from './BallVM';
 import PaddleVm from './PaddleVM';
-import keyListener from '../KeyPressListener';
+import KeyListener from '../KeyPressListener';
 
 class Breakout extends Component {
     constructor(props) {
@@ -16,38 +16,8 @@ class Breakout extends Component {
             paddle: new PaddleVm(400, 600),
         };
        
-        this.keyDownHandler = this.keyDownHandler.bind(this);
-        this.keyUpHandler = this.keyUpHandler.bind(this);
+        new KeyListener(this.state.paddle);
       }
-
-    componentDidMount(){
-        document.addEventListener("keydown", this.keyDownHandler, false);
-        document.addEventListener("keyup", this.keyUpHandler, false);
-    }
-    componentWillUnmount() {
-        document.removeEventListener('keydown', this.keyDownHandler);
-        document.removeEventListener('keyup', this.keyUpHandler);
-      }
-
-    keyDownHandler= function(e) {
-        var paddle = this.state.paddle;
-        if(e.key === "Right" || e.key === "ArrowRight") {
-            paddle.rightPressed = true;
-        }
-        else if(e.key === "Left" || e.key === "ArrowLeft") {
-            paddle.leftPressed = true;
-        }
-    }
-    
-     keyUpHandler = function(e) {
-        var paddle = this.state.paddle;
-        if(e.key === "Right" || e.key === "ArrowRight") {
-            paddle.rightPressed = false;
-        }
-        else if(e.key === "Left" || e.key === "ArrowLeft") {
-            paddle.leftPressed = false;
-        }
-    }
 
     renderCanvas = () => {
         var ball = this.state.ball;
