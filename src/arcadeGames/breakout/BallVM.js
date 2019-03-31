@@ -13,8 +13,8 @@ class BallVM {
         this.ctx = ctx;
     }
 
-    draw = function () {
-        this.recalculatePosition();
+    draw = function (paddleX, paddleWidth) {
+        this.recalculatePosition(paddleX, paddleWidth);
         this.ctx.clearRect(0, 0, this.cWidth, this.cHeight);
         this.ctx.beginPath();
         this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -22,12 +22,22 @@ class BallVM {
         this.ctx.closePath();
     }
 
-    recalculatePosition = function () {
+    recalculatePosition = function (paddleX, paddleWidth) {
         if(this.x + this.dx > this.cWidth-this.radius || this.x + this.dx < this.radius) {
             this.dx = -this.dx;
         }
-        if(this.y + this.dy > this.cHeight-this.radius || this.y + this.dy < this.radius) {
+        if(this.y + this.dy < this.radius) {
             this.dy = -this.dy;
+        }
+
+        else if(this.y + this.dy > this.cHeight-this.radius) {
+            if(this.x > paddleX && this.x < paddleX + paddleWidth) {
+                this.dy = -this.dy;
+            }
+            else {
+                alert("GAME OVER");
+                document.location.reload();
+            }
         }
 
         this.x += this.dx;
